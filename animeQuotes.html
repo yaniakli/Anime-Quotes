@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Quotes</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@900&display=swap" rel="stylesheet">
+    <style>
+        body #cdawrap {
+            border: 1px solid #000;
+            --cda-bottom: auto;
+            --cda-right: 3.5rem;
+            --cda-left: auto;
+            --cda-text-align: right;
+            --cda-width: 370px;
+            border-radius: 6px;
+            padding: 0.75rem 1rem 1rem;
+            --footer-align: end;
+            --cda-text-size: 0.875rem;
+            --cda-footer-fontsize: 0.785rem;
+            --cda-text-color: #000;
+            position: absolute;
+            transform: translateY(-150%);
+        }
+        @media screen and (max-width: 800px){
+            body #cdawrap {
+                transform: none;
+                border-radius: 0px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="home">
+        <header>
+            <a href="#"></a>
+            <ul id="menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Generate</a></li>
+                <li><a href="#product">Suggestions</a></li>
+            </ul>
+        </header>
+        <div class="split left">
+            <div class="centered">
+              <h1 class="welcome">Welcome to AnimeQuotes to find your favorites quotes</h1>
+              <li class="content__item">
+                <a class="button button--mimas" href="#about"><span href="#about">Start</span></a>
+            </li>
+            </div>
+          </div>
+        <div class="split right">
+            <div class="centered">
+                <img src="images/totoro.png">
+            </div>
+        </div>   
+    </section>
+    <section id="about">
+        <div class="leftside ">
+            <div class="main">
+                <div class="enteranime">
+                    <h1 class="anime-name">Enter the anime in which you want a quote from :</h1>
+                </div>
+                <div class="fielddiv">
+                    <input type="text" class="textField" style="Text-align:center" placeholder="anime name">
+                </div>
+                <div class="generate">
+                    <a class="generator generator2">
+                        Generate
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="rightside">
+                <h2 class="quotetext">sometimes, time can heal the deepest wounds</h2>
+                <p class="character">"Jiraya"</p>
+        </div>
+        <script>
+
+            $(".generate").click(() => {
+                let anime = $(".textField").val() ;
+                let num =  Math.floor((Math.random() * 9) + 1); 
+                fetch('https://animechan.vercel.app/api/quotes/anime?title='+anime)
+                .then(response => response.json())
+                .then(quote => {
+                    console.log(quote[num].quote);
+                    $(".quotetext").text("\""+quote[num].quote+"\"")
+                    $(".character").text("\""+ quote[num].character+"\"")
+                })
+                .catch((error) => {
+                    $(".quotetext").text("Error : anime is not found");
+                    $(".character").text("");
+
+                    console.error('Error:', error);
+            });
+            })
+        </script>
+    </section>
+    <section id="product">
+          <div class="form">
+            <div class="title">Suggest your quotes here ! </div>
+            <div class="input-container ic1">
+              <input id="name" class="input" type="text" placeholder=" " />
+              <div class="cut cut-short"></div>
+              <label for="name" class="placeholder"> anime </label>
+            </div>
+            <div class="input-container ic2">
+              <input id="character" class="input" type="text" placeholder=" " />
+              <div class="cut"></div>
+              <label for="character" class="placeholder">character</label>
+            </div>
+            <div class="input-container ic2">
+              <input id="quote" class="input" type="text" placeholder=" " />
+              <div class="cut cut-short"></div>
+              <label for="quote" class="placeholder">Quote </label>
+            </div>
+            <button type="text" class="submit2">submit</button>
+          </div>
+
+    </section>
+</body>
+</html>
